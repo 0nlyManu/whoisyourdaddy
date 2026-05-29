@@ -45,6 +45,17 @@ Designed for professional penetration testers and red teamers during the pre-eng
 [+] report saved: report.html
 ```
 
+
+---
+
+## Screenshots
+
+<div align="center">
+  <img src="assets/output_example.png" width="500">
+  <br><br>
+  <img src="assets/report_output.png" width="800">
+</div>
+
 ---
 
 ## Features
