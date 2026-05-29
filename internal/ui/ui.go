@@ -33,7 +33,6 @@ func PrintBanner() {
 }
 
 func PrintHelp() {
-	PrintBanner()
 	fmt.Printf("%sUSAGE%s\n", Bold, Reset)
 	fmt.Printf("  wiyd %s-target%s <domain>\n\n", Cyan, Reset)
 	fmt.Printf("  wiyd %s-target%s <domain> %s-wordlist%s <wordlist>\n\n", Cyan, Reset, Cyan, Reset)
