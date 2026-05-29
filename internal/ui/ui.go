@@ -37,15 +37,18 @@ func PrintHelp() {
 	fmt.Printf("%sUSAGE%s\n", Bold, Reset)
 	fmt.Printf("  wiyd %s-target%s <domain>\n\n", Cyan, Reset)
 	fmt.Printf("  wiyd %s-target%s <domain> %s-wordlist%s <wordlist>\n\n", Cyan, Reset, Cyan, Reset)
+	fmt.Printf("  wiyd %s-target%s <domain> %s-wordlist%s <wordlist> %s-output%s report.txt \n\n", Cyan, Reset, Cyan, Reset, Cyan, Reset)
 
 	fmt.Printf("%sOPTIONS%s\n", Bold, Reset)
 	fmt.Printf("  %s-target%s    target domain to enumerate\n", Cyan, Reset)
 	fmt.Printf("  %s-wordlist%s  external wordlist to use\n", Cyan, Reset)
+	fmt.Printf("  %s-output%s    wether to save output\n", Cyan, Reset)
 	fmt.Printf("  %s-h%s         show this help menu\n\n", Cyan, Reset)
 
 	fmt.Printf("%sEXAMPLES%s\n", Bold, Reset)
 	fmt.Printf("  wiyd -target example.com\n")
 	fmt.Printf("  wiyd %s-target%s hackthebox.com %s-wordlist%s seclist/common_domains.txt \n\n", Cyan, Reset, Cyan, Reset)
+	fmt.Printf("  wiyd %s-target%s hackthebox.com %s-wordlist%s seclist/common_domains.txt %s-output%s report\n\n", Cyan, Reset, Cyan, Reset)
 
 	fmt.Printf("%sMODULES%s\n", Bold, Reset)
 	fmt.Printf("  %scrt.sh%s      certificate transparency subdomain enumeration\n", Yellow, Reset)

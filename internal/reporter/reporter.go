@@ -1,10 +1,15 @@
 package reporter
 
 import (
+	_ "embed"
+	"html/template"
 	"os"
 
 	"github.com/OnlyManuel/whoisyourdaddy/internal/models"
 )
+
+//go:embed templates/report.html
+var reportTemplate string
 
 type ReportData struct {
 	Target      string
@@ -21,6 +26,14 @@ type Reporter struct {
 }
 
 func (r Reporter) Generate(reportData ReportData) error {
-	os.Create(r.OutputPath)
-	return nil
+	file, err := os.Create(r.OutputPath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	tmpl, err := template.New("report").Parse(reportTemplate)
+	if err != nil {
+		return err
+	}
+	return tmpl.Execute(file, reportData)
 }

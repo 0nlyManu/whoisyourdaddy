@@ -6,9 +6,11 @@ import (
 	"fmt"
 	"os"
 	"sort"
+	"time"
 
 	"github.com/OnlyManuel/whoisyourdaddy/internal/correlator"
 	"github.com/OnlyManuel/whoisyourdaddy/internal/models"
+	"github.com/OnlyManuel/whoisyourdaddy/internal/reporter"
 	"github.com/OnlyManuel/whoisyourdaddy/internal/ui"
 	"github.com/OnlyManuel/whoisyourdaddy/sources"
 )
@@ -24,7 +26,8 @@ func runSource(src sources.Source, ctx context.Context, target string) models.Re
 func main() {
 	flag.Usage = ui.PrintHelp
 	target := flag.String("target", "", "target domain")
-	wordlist := flag.String("wordlist", "", "external wordlists to use for dns enumeration")
+	wordlist := flag.String("wordlist", "", "external wordlist to use for dns enumeration")
+	output := flag.String("output", "report.html", "output report file path")
 	flag.Parse()
 
 	ui.PrintBanner()
@@ -87,5 +90,34 @@ func main() {
 			asset.Metadata["sources"],
 		)
 	}
+
 	fmt.Println()
+
+	highRisk, mediumRisk, lowRisk := 0, 0, 0
+	for _, asset := range assets {
+		switch {
+		case asset.RiskScore >= 7:
+			highRisk++
+		case asset.RiskScore >= 4:
+			mediumRisk++
+		default:
+			lowRisk++
+		}
+	}
+
+	r := reporter.Reporter{OutputPath: *output}
+	err := r.Generate(reporter.ReportData{
+		Target:      *target,
+		Date:        time.Now().Format("2006-01-02 15:04:05"),
+		TotalAssets: len(assets),
+		HighRisk:    highRisk,
+		MediumRisk:  mediumRisk,
+		LowRisk:     lowRisk,
+		Assets:      assets,
+	})
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s[-] report error: %v%s\n", ui.Red, err, ui.Reset)
+	} else {
+		fmt.Printf("%s[+] report saved: %s%s\n\n", ui.Green, *output, ui.Reset)
+	}
 }
