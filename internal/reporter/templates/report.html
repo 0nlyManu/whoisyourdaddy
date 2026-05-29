@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhoIsYourDaddy — Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a2e;
+            padding: 40px;
+        }
+
+        header {
+            background: #1a1a2e;
+            color: white;
+            padding: 32px 40px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        header .meta {
+            text-align: right;
+            font-size: 13px;
+            opacity: 0.7;
+            line-height: 1.8;
+        }
+
+        header .meta span {
+            display: block;
+        }
+
+        header .target {
+            font-size: 16px;
+            opacity: 1;
+            color: #e94560;
+            font-weight: 600;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border-top: 3px solid #e2e8f0;
+        }
+
+        .card.total { border-top-color: #1a1a2e; }
+        .card.high   { border-top-color: #e53e3e; }
+        .card.medium { border-top-color: #dd6b20; }
+        .card.low    { border-top-color: #38a169; }
+
+        .card .label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #718096;
+            margin-bottom: 8px;
+        }
+
+        .card .value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .card.high .value   { color: #e53e3e; }
+        .card.medium .value { color: #dd6b20; }
+        .card.low .value    { color: #38a169; }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .table-header .generated {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            background: #f7fafc;
+            padding: 12px 24px;
+            text-align: left;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #718096;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f0f4f8;
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover { background: #f7fafc; }
+        tbody tr:last-child { border-bottom: none; }
+
+        tbody td {
+            padding: 14px 24px;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .score-high   { background: #fff5f5; color: #e53e3e; border: 1px solid #fed7d7; }
+        .score-medium { background: #fffaf0; color: #dd6b20; border: 1px solid #feebc8; }
+        .score-low    { background: #f0fff4; color: #38a169; border: 1px solid #c6f6d5; }
+
+        .asset-value { font-weight: 600; font-family: monospace; font-size: 13px; }
+        .ip-value    { font-family: monospace; font-size: 13px; color: #4a5568; }
+        .sources     { font-size: 12px; color: #718096; }
+
+        .row-num { color: #cbd5e0; font-size: 12px; }
+
+        footer {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 12px;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>WHOISYOURDADDY</h1>
+        <div style="font-size:13px; opacity:0.6; margin-top:4px;">attack surface mapper</div>
+    </div>
+    <div class="meta">
+        <span class="target">{{ .Target }}</span>
+        <span>{{ .Date }}</span>
+        <span>generated by wiyd v0.1.0</span>
+    </div>
+</header>
+
+<div class="cards">
+    <div class="card total">
+        <div class="label">Total Assets</div>
+        <div class="value">{{ .TotalAssets }}</div>
+    </div>
+    <div class="card high">
+        <div class="label">High Risk</div>
+        <div class="value">{{ .HighRisk }}</div>
+    </div>
+    <div class="card medium">
+        <div class="label">Medium Risk</div>
+        <div class="value">{{ .MediumRisk }}</div>
+    </div>
+    <div class="card low">
+        <div class="label">Low Risk</div>
+        <div class="value">{{ .LowRisk }}</div>
+    </div>
+</div>
+
+<div class="table-container">
+    <div class="table-header">
+        <h2>DISCOVERED ASSETS</h2>
+        <span class="generated">{{ .Date }}</span>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Asset</th>
+                <th>IP</th>
+                <th>Sources</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $i, $a := .Assets }}
+            <tr>
+                <td class="row-num">{{ $i }}</td>
+                <td class="asset-value">{{ $a.Value }}</td>
+                <td class="ip-value">{{ index $a.Metadata "ip" }}</td>
+                <td class="sources">{{ index $a.Metadata "sources" }}</td>
+                <td>
+                    {{ if ge $a.RiskScore 7 }}
+                        <span class="score-badge score-high">{{ $a.RiskScore }}</span>
+                    {{ else if ge $a.RiskScore 4 }}
+                        <span class="score-badge score-medium">{{ $a.RiskScore }}</span>
+                    {{ else }}
+                        <span class="score-badge score-low">{{ $a.RiskScore }}</span>
+                    {{ end }}
+                </td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    WhoIsYourDaddy — for authorized security testing only
+</footer>
+
+</body>
+</html>
