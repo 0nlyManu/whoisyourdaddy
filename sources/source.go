@@ -3,7 +3,7 @@ package sources
 import (
 	"context"
 
-	"github.com/OnlyManuel/whoisyourdaddy/internal/models"
+	"github.com/0nlyManu/whoisyourdaddy/internal/models"
 )
 
 type Source interface {

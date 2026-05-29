@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"os"
 
-	"github.com/OnlyManuel/whoisyourdaddy/internal/models"
+	"github.com/0nlyManu/whoisyourdaddy/internal/models"
 )
 
 //go:embed templates/report.html

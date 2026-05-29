@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/OnlyManuel/whoisyourdaddy/internal/models"
+	"github.com/0nlyManu/whoisyourdaddy/internal/models"
 )
 
 type CrtSh struct {

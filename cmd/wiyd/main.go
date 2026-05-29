@@ -8,11 +8,11 @@ import (
 	"sort"
 	"time"
 
-	"github.com/OnlyManuel/whoisyourdaddy/internal/correlator"
-	"github.com/OnlyManuel/whoisyourdaddy/internal/models"
-	"github.com/OnlyManuel/whoisyourdaddy/internal/reporter"
-	"github.com/OnlyManuel/whoisyourdaddy/internal/ui"
-	"github.com/OnlyManuel/whoisyourdaddy/sources"
+	"github.com/0nlyManu/whoisyourdaddy/internal/correlator"
+	"github.com/0nlyManu/whoisyourdaddy/internal/models"
+	"github.com/0nlyManu/whoisyourdaddy/internal/reporter"
+	"github.com/0nlyManu/whoisyourdaddy/internal/ui"
+	"github.com/0nlyManu/whoisyourdaddy/sources"
 )
 
 func runSource(src sources.Source, ctx context.Context, target string) models.Result {

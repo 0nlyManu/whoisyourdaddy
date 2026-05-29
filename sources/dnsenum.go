@@ -8,7 +8,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/OnlyManuel/whoisyourdaddy/internal/models"
+	"github.com/0nlyManu/whoisyourdaddy/internal/models"
 )
 
 var defaultWordlist = []string{"www", "mail", "admin", "dev", "staging", "gitlab", "vpn", "api", "test", "internal"}
